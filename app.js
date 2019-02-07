@@ -1,4 +1,4 @@
-var scores, roundScore, activePlayer, diceDOM, buttonRollDOM, gamePlaying;
+var scores, roundScore, activePlayer, diceDOM, buttonRollDOM, gamePlaying, previousDice;
 
 init()
 
@@ -18,14 +18,23 @@ buttonRollDOM.addEventListener('click', function(){
         diceDOM.src = "dice-" + dice + ".png"
 
         // 3. Update the round score if the rolled number wasn't 1
-        if (dice !== 1){
-            
+        if(dice ===6 && previousDice === 6){
+            document.querySelector("#score-"+activePlayer).textContent = '0'
+            scores[activePlayer] = 0
+            nextPlayer()
+
+        }
+        else if(dice === 1){
+
+            nextPlayer()
+        }else{
+
             // Add score
             roundScore += dice
             document.querySelector("#current-"+activePlayer).textContent = roundScore;
-        }else{
-            nextPlayer()
         }
+
+        previousDice = dice
     }
 })
 
